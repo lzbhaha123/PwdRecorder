@@ -13,7 +13,9 @@ class MyApp extends StatelessWidget {
       title: 'Password Recorder',
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Password Recorder'),
+          title: Center(
+            child: Text('Password Recorder'),
+          ),
         ),
         body: Login(),
       ),
