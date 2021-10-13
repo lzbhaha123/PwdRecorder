@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart';
-import 'package:sqflite/sqflite.dart';
+import 'dbhelper.dart';
 
 void main() => runApp(MyApp());
 
@@ -28,6 +27,14 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    //connectSQL();
+    initDB();
     return Text("11111");
   }
+}
+
+class EnterPwd {
+  String hint;
+  String password;
+  EnterPwd(this.hint, this.password);
 }
