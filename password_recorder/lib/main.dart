@@ -23,6 +23,55 @@ class MyApp extends StatelessWidget {
   }
 }
 
+class Login extends StatefulWidget {
+  Login({Key? key}) : super(key: key);
+
+  @override
+  _LoginState createState() => _LoginState();
+}
+
+class _LoginState extends State<Login> {
+  late Future<List<Test>> tests;
+  @override
+  void initState() {
+    super.initState();
+    tests = Test.tests();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+        child: FutureBuilder(
+      future: Test.tests(),
+      builder: (BuildContext context, AsyncSnapshot<List<Test>> snapshot) {
+        switch (snapshot.connectionState) {
+          case ConnectionState.none:
+            return new Text('Press button to start');
+          case ConnectionState.waiting:
+            return new Text('Awaiting result...');
+          default:
+            if (snapshot.hasError)
+              return new Text('Error');
+            else
+              return ListView.builder(
+                  padding: EdgeInsets.all(10),
+                  itemCount: snapshot.data!.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Text(snapshot.data![index].info);
+                  });
+        }
+      },
+    ));
+  }
+
+  /*insertData() async {
+    Test t1 = Test(1, "hello");
+    await Test.insertTest(t1);
+    Test t2 = Test(2, "world");
+    await Test.insertTest(t2);
+  }*/
+}
+/*
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
   @override
@@ -37,14 +86,14 @@ class Login extends StatelessWidget {
     
     return Container(
       child:
-        FutureBuilder(future: Test.tests(),builder: (BuildContext context, AsyncSnapshot<List<Test>> snapshot) {      //snapshot就是_calculation在时间轴上执行过程的状态快照
+        FutureBuilder(future: Test.tests(),builder: (BuildContext context, AsyncSnapshot<List<Test>> snapshot) {     
           switch (snapshot.connectionState) {
-            case ConnectionState.none: return new Text('Press button to start');    //如果_calculation未执行则提示：请点击开始
-            case ConnectionState.waiting: return new Text('Awaiting result...');  //如果_calculation正在执行则提示：加载中
-            default:    //如果_calculation执行完毕
-              if (snapshot.hasError)    //若_calculation执行出现异常
+            case ConnectionState.none: return new Text('Press button to start');   
+            case ConnectionState.waiting: return new Text('Awaiting result...');  
+            default:    
+              if (snapshot.hasError)    
                 return new Text('Error');
-              else    //若_calculation执行正常完成
+              else    
                 return ListView.builder(
                   padding: EdgeInsets.all(10),
                   itemCount: snapshot.data?.length,
@@ -67,9 +116,8 @@ class Login extends StatelessWidget {
     await Test.insertTest(t1);
     Test t2 = Test(2,"world");
     await Test.insertTest(t2);
-    print(await Test.tests());
   }
-}
+}*/
 
 class EnterPwd {
   String hint;
